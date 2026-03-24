@@ -1,5 +1,12 @@
-// API Keys placeholders - Replace with actual keys
-const OPENROUTER_API_KEY = "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";
+// API Keys - Fetched from local storage or prompted to prevent GitHub leaks!
+let OPENROUTER_API_KEY = localStorage.getItem('openrouter_key');
+
+if (!OPENROUTER_API_KEY) {
+    OPENROUTER_API_KEY = prompt("Enter your OpenRouter API Key to start chatting:");
+    if (OPENROUTER_API_KEY) {
+        localStorage.setItem('openrouter_key', OPENROUTER_API_KEY);
+    }
+}
 // Image generation now uses Pollinations.ai which is free and requires no key.
 
 const chatArea = document.getElementById('chatArea');
@@ -78,7 +85,7 @@ async function handleSendMessage() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                model: "openai/gpt-3.5-turbo", // Default model, can be changed
+                model: "google/gemini-2.0-flash-lite-preview-02-05:free", // Changed to a free model to avoid billing issues
                 messages: conversationHistory
             })
         });
